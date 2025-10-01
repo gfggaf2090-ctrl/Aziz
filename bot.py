@@ -139,7 +139,7 @@ async def status_loop():
     await bot.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.listening,
-            name="🎧 ش [اسم الأغنية]"
+            name="🎧 Aziz"
         )
     )
 
