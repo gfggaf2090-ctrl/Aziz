@@ -105,7 +105,7 @@ class MusicPlayer:
             )
             
             embed = discord.Embed(
-                title="🎵 يتم التشغيل الآن",
+                title="🎧 يتم التشغيل الآن",
                 description=f"**{song['title']}**",
                 color=discord.Color.green()
             )
@@ -138,8 +138,8 @@ async def status_loop():
     """تحديث حالة البوت"""
     await bot.change_presence(
         activity=discord.Activity(
-            type=discord.ActivityType.streaming,
-            name="🎵 Aziz"
+            type=discord.ActivityType.listening,
+            name="🎧 ش [اسم الأغنية]"
         )
     )
 
@@ -267,7 +267,7 @@ async def on_message(message):
             
             if player.current:
                 embed.add_field(
-                    name="🎵 الأغنية الحالية",
+                    name="🎧 الأغنية الحالية",
                     value=player.current['title'],
                     inline=False
                 )
@@ -293,7 +293,7 @@ async def on_message(message):
             player = queues[message.guild.id]
             if player.current:
                 embed = discord.Embed(
-                    title="🎵 الأغنية الحالية",
+                    title="🎧 الأغنية الحالية",
                     description=f"**{player.current['title']}**",
                     color=discord.Color.green()
                 )
@@ -312,7 +312,7 @@ async def on_message(message):
     # أمر الأوامر
     elif content_lower in ['الأوامر', 'اوامر', 'help', 'مساعدة']:
         embed = discord.Embed(
-            title="📖 قائمة الأوامر",
+            title="🎧 قائمة الأوامر",
             description="أوامر البوت الموسيقي",
             color=discord.Color.blue()
         )
@@ -327,7 +327,7 @@ async def on_message(message):
         embed.add_field(name="ايقاف", value="إيقاف كامل والخروج", inline=True)
         embed.add_field(name="القائمة", value="عرض قائمة الأغاني", inline=True)
         embed.add_field(name="الحالية", value="الأغنية اللي تشتغل الحين", inline=True)
-        embed.set_footer(text="🎵 بوت موسيقي 24/7")
+        embed.set_footer(text="🎧 بوت موسيقي 24/7")
         
         await message.channel.send(embed=embed)
 
@@ -335,7 +335,11 @@ async def on_message(message):
 if __name__ == "__main__":
     keep_alive()
     
-    TOKEN = os.getenv('MTA1OTc4MzQzMzU2MTMxNzQ4Ng.GudLoX.OEKe3zo9xYIoT93lpqfAMPH5AT0YcS6tPYQCus') 
+    TOKEN = os.getenv('DISCORD_TOKEN')
+    
+    if not TOKEN:
+        print("❌ خطأ: DISCORD_TOKEN غير موجود في متغيرات البيئة!")
+        exit(1)
     
     try:
         bot.run(TOKEN)
