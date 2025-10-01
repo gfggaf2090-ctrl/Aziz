@@ -139,7 +139,7 @@ async def status_loop():
     await bot.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.listening,
-            name="🎧 Aziz"
+            name="🎧 ش [اسم الأغنية]"
         )
     )
 
@@ -182,9 +182,16 @@ async def on_message(message):
         player = queues[message.guild.id]
         
         if not player.voice_client:
-            player.voice_client = await voice_channel.connect()
+            try:
+                player.voice_client = await voice_channel.connect(timeout=20.0, reconnect=True)
+            except Exception as e:
+                await message.channel.send(f"❌ فشل الاتصال بالروم الصوتي: {e}")
+                return
         elif player.voice_client.channel != voice_channel:
-            await player.voice_client.move_to(voice_channel)
+            try:
+                await player.voice_client.move_to(voice_channel)
+            except:
+                pass
         
         search_msg = await message.channel.send("🔍 جاري البحث...")
         
